@@ -7,6 +7,9 @@
     </modules>
 
     <global>
+        <blocks>
+            <pelecard><class>Songnguyen_Pelecard_Block</class></pelecard>
+        </blocks>
         <!--Register a route to model files-->
         <models>
             <pelecard>
@@ -83,7 +86,7 @@
                 <payment_action>authorize_capture</payment_action>
                 <!--<test_gateway>0</test_gateway>-->
                 <order_status>complete</order_status>
-                <cctypes>VI,MC</cctypes>
+                <cctypes>VI</cctypes>
             </pelecard>
         </payment>
         <pelecard>

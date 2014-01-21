@@ -14,6 +14,8 @@ class Songnguyen_Pelecard_Model_Standard extends Mage_Payment_Model_Method_Cc
     protected $_canUseForMultishipping = true;
     protected $_canSaveCc = false;
 
+    protected $_formBlockType = 'pelecard/form';
+    protected $_infoBlockType = 'pelecard/info';
     private function getUsername()
     {
         return Mage::getStoreConfig('payment/' . $this->getCode() . '/username');
@@ -60,7 +62,6 @@ class Songnguyen_Pelecard_Model_Standard extends Mage_Payment_Model_Method_Cc
         }
 
         if ($currency_code != $this->getAcceptedCurrency()) {
-//            Mage::throwException(Mage::helper('pelecard')->__('Selected currency code (' . $currency_code . ') is not compatabile with PeleCard'));
             Mage::throwException('Selected currency code (' . $currency_code . ') is not compatabile with PeleCard (' . $this->getAcceptedCurrency() . ')');
         }
         return $this;
@@ -70,8 +71,8 @@ class Songnguyen_Pelecard_Model_Standard extends Mage_Payment_Model_Method_Cc
     {
         $this->setAmount($amount)
             ->setPayment($payment);
-
-        $result = $this->callDoDirectPayment();
+        $pay_arr = Mage::app()->getRequest()->getParam('payment');
+        $result = $this->callDoDirectPayment($pay_arr['cc_identity']);
         if ($result['code'] != '000') {
             $e = $this->getError();
             if (isset($e['message'])) {
@@ -97,7 +98,7 @@ class Songnguyen_Pelecard_Model_Standard extends Mage_Payment_Model_Method_Cc
      *
      * @return bool | array
      */
-    public function callDoDirectPayment()
+    public function callDoDirectPayment($identity)
     {
         $payment = $this->getPayment();
         $billing = $payment->getOrder()->getBillingAddress();
@@ -142,8 +143,8 @@ class Songnguyen_Pelecard_Model_Standard extends Mage_Payment_Model_Method_Cc
             'total' => $this->getAmount(),
             'currency' => $currency,
             'cvv2' => $payment->getCcCid(),
-            'id' => $payment->getOrder()->getIncrementId(),
-            'authNum' => '12454',
+            'id' => $identity,
+            'authNum' => $payment->getOrder()->getIncrementId(),
             'parmx' => 'test'
         );
         list ($code, $result) = $this->do_post_request($operation, $data);
