@@ -1,0 +1,95 @@
+<?xml version="1.0"?>
+<config>
+    <modules>
+        <Songnguyen_Pelecard>
+            <version>0.1.0</version>
+        </Songnguyen_Pelecard>
+    </modules>
+
+    <global>
+        <!--Register a route to model files-->
+        <models>
+            <pelecard>
+                <class>Songnguyen_Pelecard_Model</class>
+            </pelecard>
+        </models>
+        <helpers>
+            <pelecard>
+                <class>Songnguyen_Pelecard_Helper</class>
+            </pelecard>
+        </helpers>
+        <resources>
+            <pelecard_setup>
+                <setup>
+                    <module>Songnguyen_Pelecard</module>
+                </setup>
+                <connection>
+                    <use>core_setup</use>
+                </connection>
+            </pelecard_setup>
+            <pelecard_write>
+                <connection>
+                    <use>core_write</use>
+                </connection>
+            </pelecard_write>
+            <pelecard_read>
+                <connection>
+                    <use>core_read</use>
+                </connection>
+            </pelecard_read>
+        </resources>
+        <payment>
+            <cc>
+                <types>
+                    <JCB>
+                        <code>JCB</code>
+                        <name>JCB</name>
+                        <order>50</order>
+                    </JCB>
+                    <DICL>
+                        <code>DICL</code>
+                        <name>Diners Club</name>
+                        <order>60</order>
+                    </DICL>
+                </types>
+            </cc>
+        </payment>
+    </global>
+    <frontend>
+        <secure_url>
+            <pelecard_processing>/pelecard/standard</pelecard_processing>
+        </secure_url>
+        <routers>
+            <pelecard>
+                <use>standard</use>
+                <args>
+                    <module>Songnguyen_Pelecard</module>
+                    <frontName>pelecard</frontName>
+                </args>
+            </pelecard>
+        </routers>
+    </frontend>
+    <default>
+        <payment>
+            <pelecard>
+                <username backend_model="adminhtml/system_config_backend_encrypted"/>
+                <password backend_model="adminhtml/system_config_backend_encrypted"/>
+                <terminal_id backend_model="adminhtml/system_config_backend_encrypted"/>
+                <model>pelecard/standard</model>
+                <group>pelecard</group>
+                <active>1</active>
+                <currency>USD</currency>
+                <title>Credit Card (Pelecard - Payment Gateway)</title>
+                <payment_action>authorize_capture</payment_action>
+                <!--<test_gateway>0</test_gateway>-->
+                <order_status>complete</order_status>
+                <cctypes>VI,MC</cctypes>
+            </pelecard>
+        </payment>
+        <pelecard>
+            <settings>
+                <activationstatus>0</activationstatus>
+            </settings>
+        </pelecard>
+    </default>
+</config>
