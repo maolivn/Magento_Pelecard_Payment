@@ -4,7 +4,7 @@
         <payment>
             <groups>
                 <!-- This node name should match your module name in the config.xml and model. !-->
-                <pelecard translate="label" module="eway">
+                <pelecard translate="label" module="pelecard">
                     <label>Pelecard Payment</label>
                     <frontend_type>text</frontend_type>
                     <sort_order>201</sort_order>
