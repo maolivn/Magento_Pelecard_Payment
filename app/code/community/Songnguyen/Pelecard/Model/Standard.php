@@ -78,7 +78,7 @@ class Songnguyen_Pelecard_Model_Standard extends Mage_Payment_Model_Method_Cc
             if (isset($e['message'])) {
                 $message = 'There has been an error processing your payment. ' . $e['message'];
             } else {
-                $message = 'There has been an error processing your payment. Please try later or contact us for help.';
+                $message = 'There has been an error processing your payment. Please try later or contact us for help.(Error code: ' .$result['result'] .')';
             }
             Mage::throwException($message);
         } else {
@@ -140,7 +140,8 @@ class Songnguyen_Pelecard_Model_Standard extends Mage_Payment_Model_Method_Cc
             'creditCard' => $cc,
             'creditCardDateMmyy' => $cc_date,
             'token' => $token,
-            'total' => $this->getAmount(),
+//            'total' => $this->getAmount(),
+            'total' => '3000',
             'currency' => $currency,
             'cvv2' => $payment->getCcCid(),
             'id' => $identity,
