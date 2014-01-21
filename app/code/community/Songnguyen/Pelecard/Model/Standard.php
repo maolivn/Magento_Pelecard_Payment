@@ -60,7 +60,7 @@ class Songnguyen_Pelecard_Model_Standard extends Mage_Payment_Model_Method_Cc
         }
 
         if ($currency_code != $this->getAcceptedCurrency()) {
-//            Mage::throwException(Mage::helper('ewayau')->__('Selected currency code (' . $currency_code . ') is not compatabile with PeleCard'));
+//            Mage::throwException(Mage::helper('pelecard')->__('Selected currency code (' . $currency_code . ') is not compatabile with PeleCard'));
             Mage::throwException(Mage::helper('pelecard')->__('Selected currency code (' . $currency_code . ') is not compatabile with PeleCard (' . $this->getAcceptedCurrency() . ')'));
         }
         return $this;
@@ -75,9 +75,9 @@ class Songnguyen_Pelecard_Model_Standard extends Mage_Payment_Model_Method_Cc
         if ($result['code'] != '000') {
             $e = $this->getError();
             if (isset($e['message'])) {
-                $message = Mage::helper('ewayau')->__('There has been an error processing your payment. ') . $e['message'];
+                $message = Mage::helper('pelecard')->__('There has been an error processing your payment. ') . $e['message'];
             } else {
-                $message = Mage::helper('ewayau')->__('There has been an error processing your payment. Please try later or contact us for help.');
+                $message = Mage::helper('pelecard')->__('There has been an error processing your payment. Please try later or contact us for help.');
             }
             Mage::throwException($message);
         } else {
