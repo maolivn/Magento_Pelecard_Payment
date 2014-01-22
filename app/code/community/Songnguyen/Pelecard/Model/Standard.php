@@ -82,7 +82,7 @@ class Songnguyen_Pelecard_Model_Standard extends Mage_Payment_Model_Method_Cc
             }
             Mage::throwException($message);
         } else {
-            $payment->setStatus(self::STATUS_APPROVED)->setLastTransId($result['RebillID']);
+            $payment->setStatus(self::STATUS_APPROVED);
         }
         return $this;
     }
@@ -140,8 +140,7 @@ class Songnguyen_Pelecard_Model_Standard extends Mage_Payment_Model_Method_Cc
             'creditCard' => $cc,
             'creditCardDateMmyy' => $cc_date,
             'token' => $token,
-//            'total' => $this->getAmount(),
-            'total' => '3000',
+            'total' => $this->getAmount() * 100,
             'currency' => $currency,
             'cvv2' => $payment->getCcCid(),
             'id' => $identity,
